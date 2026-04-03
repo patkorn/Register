@@ -36,9 +36,8 @@
         .logo-img { max-width: 120px; height: auto; margin-bottom: 15px; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5)); }
         .form-label { font-size: 0.9rem; color: #a8b2d1; text-align: left; display: block; margin-bottom: 8px; }
         
-        /* สไตล์สำหรับกล่องข้อความแจ้งเตือน */
         .alert-box {
-            background-color: rgba(255, 193, 7, 0.15); /* พื้นหลังสีเหลือง/ส้มใสๆ */
+            background-color: rgba(255, 193, 7, 0.15); 
             border-left: 4px solid #ffc107;
             color: #ffdca8;
             padding: 10px 15px;
@@ -66,17 +65,19 @@
 <body>
     <div class="container d-flex justify-content-center">
         <div class="register-card text-center">
-            <img src="https://cdn.jsdelivr.net/gh/patkorn/piclogo/PK_EA.png" alt="PK_EA Logo" class="logo-img">
+            
+            <img src="https://cdn-icons-png.flaticon.com/512/2633/2633333.png" alt="PK_EA Logo" class="logo-img">
+            
             <h3 class="mb-2 fw-bold">ลงทะเบียนสมาชิก</h3>
             
             <div class="alert-box mb-4">
                 <i class='bx bxs-info-circle' style='color:#ffc107'></i> 
-                <strong>คำแนะนำ:</strong> กรุณาสมัครบัญชีเทรดกับPU Prime ให้เรียบร้อย ก่อนทำการลงทะเบียนสมาชิก VIP นะคะ
+                <strong>คำแนะนำ:</strong> กรุณาสมัครบัญชีเทรดกับ PU Prime ให้เรียบร้อย ก่อนทำการลงทะเบียนสมาชิก VIP นะคะ
             </div>
             
             <div class="mb-3 text-start">
                 <label for="fname" class="form-label"><i class='bx bx-user' style='color:#38ef7d'></i> ชื่อ - นามสกุล</label>
-                <input type="text" class="form-control" id="fname" placeholder="กรอกชื่อ นามสกุล">
+                <input type="text" class="form-control" id="fname" placeholder="กรอกชื่อ นามสกุลจริง">
             </div>
 
             <div class="mb-3 text-start">
@@ -90,7 +91,7 @@
             </div>
             
             <div class="text-center mt-4">
-                <button type="button" class="btn btn-register w-100 fs-5" id="submit-btn"><i class='bx bx-user-plus'></i> ลงทะเบียน</button>
+                <button type="button" class="btn btn-register w-100 fs-5" id="submit-btn"><i class='bx bx-user-plus'></i> ลงทะเบียนเลย</button>
                 <button type="button" class="btn btn-register w-100 fs-5" id="loading-btn" disabled style="display:none;">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> กำลังบันทึกข้อมูล...
                 </button>
@@ -100,7 +101,7 @@
 
 <script>
     $(document).ready(() => {
-        // 🚨 อย่าลืมใส่ LIFF ID นะครับ 🚨
+        // อย่าลืมใส่ LIFF ID 
         liff.init({ liffId: '2009651859-yFydAvlN' }); 
         
         $('#submit-btn').click(submitData);
@@ -126,7 +127,7 @@
 
         let lineUid = liff.getDecodedIDToken().sub; 
         
-        const webAppUrl = 'https://script.google.com/macros/s/AKfycbw8p2bVv_u70rwIRgX6nCPO9OCUHBa_Ahpnk7tAL6TQPFgRV_EuC3BnXng6DkGdgsZ6/exec';
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycby66kmJ-Ct6DiPRZ3rrTR5FzL42X6rPpvG5PIAYsoehmNoSOxNOIA1amwjVHLolknV8/exec';
 
         let payload = {
             opt: 'register_new',
@@ -137,11 +138,12 @@
         };
 
         $.post(webAppUrl, payload, function (res) {
-            if (res === 'success') {
+            // 🚨 จุดที่ปรับแก้: เพิ่ม .trim() และโชว์ข้อความ Error จริง
+            if (res.trim() === 'success') {
                 alert('✅ ลงทะเบียนเรียบร้อยแล้ว แอดมินจะตรวจสอบข้อมูลโดยเร็วที่สุดค่ะ');
                 liff.closeWindow(); 
             } else {
-                alert('❌ เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองใหม่อีกครั้ง');
+                alert('❌ เกิดข้อผิดพลาดจากระบบเซิร์ฟเวอร์:\n' + res);
                 $("#submit-btn").show();
                 $("#loading-btn").hide();
             }
