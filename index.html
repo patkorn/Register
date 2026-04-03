@@ -101,7 +101,7 @@
 
 <script>
     $(document).ready(() => {
-        // อย่าลืมใส่ LIFF ID 
+        // LIFF ID ปัจจุบัน
         liff.init({ liffId: '2009651859-yFydAvlN' }); 
         
         $('#submit-btn').click(submitData);
@@ -127,7 +127,8 @@
 
         let lineUid = liff.getDecodedIDToken().sub; 
         
-        const webAppUrl = 'https://script.google.com/macros/s/AKfycbx1cASBYIRT20T05nLwYT5jbQIwMnlUtFMF3WoUsraYStUWi0jyekbbh89prTH9uJb-/exec';
+        // 🚨 เช็คให้ชัวร์ว่า Web App URL เป็นลิงก์ที่เกิดจาก "เวอร์ชันใหม่" ล่าสุดจริงๆ 
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycbwE-C46EUNywS38PZRkTR8CB46nK_06GLWjZKEc6_dZhzGxGufX2J-XgQrM8bc_bJOl/exec';
 
         let payload = {
             opt: 'register_new',
@@ -138,9 +139,9 @@
         };
 
         $.post(webAppUrl, payload, function (res) {
-            // 🚨 จุดที่ปรับแก้: เพิ่ม .trim() และโชว์ข้อความ Error จริง
+            // 🚨 ปรับแก้ให้คลีนที่สุด: เช็คแค่ success อย่างเดียว
             if (res.trim() === 'success') {
-                alert('✅ ลงทะเบียนเรียบร้อยแล้ว แอดมินจะตรวจสอบข้อมูลโดยเร็วที่สุดค่ะ');
+                alert('✅ ลงทะเบียนเรียบร้อยแล้ว แอดมินจะตรวจสอบข้อมูลโดยเร็วที่สุด รออนุมัติสักครู่ค่ะ... ');
                 liff.closeWindow(); 
             } else {
                 alert('❌ เกิดข้อผิดพลาดจากระบบเซิร์ฟเวอร์:\n' + res);
